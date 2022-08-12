@@ -3,7 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework import filters
 
-from posts.models import Post, Comment, Group, Follow
+from posts.models import Post, Comment, Group, User
 from .serializers import (
     PostSerializer, CommentSerializer,
     GroupSerializer, FollowSerializer
@@ -45,8 +45,8 @@ class FollowViewSet(viewsets.ModelViewSet):
     search_fields = ('following__username',)
 
     def get_queryset(self):
-        following = Follow.objects.filter(user=self.request.user)
-        return following
+        user = User.objects.get(username=self.request.user.username)
+        return user.follower
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

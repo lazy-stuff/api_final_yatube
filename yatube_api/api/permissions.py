@@ -16,4 +16,4 @@ class IsAuthorOrReadOnly(BasePermission):
                 raise PermissionDenied(
                     'Доступ к редактированию чужого контента закрыт.'
                 )
-        return obj.author == request.user
+        return True
